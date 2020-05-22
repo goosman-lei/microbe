@@ -19,10 +19,10 @@ class Runner {
             return ; // 只运行一次
         }
         self::$runner = new self();
-        self::$runner->run($rootPath);
+        self::$runner->_run($rootPath);
     }
 
-    protected function run($rootPath) {
+    protected function _run($rootPath) {
         \Microbe\Microbe::init($rootPath);
 
         $this->setupInputOutput();
@@ -56,7 +56,7 @@ class Runner {
     }
 
     protected function route() {
-        $routerClass = \Microbe\Micorbe::$ins->mainApp->config->get('framework.router.action_class');
+        $routerClass = \Microbe\Microbe::$ins->mainApp->config->get('framework.router.action_class');
         if (empty($routerClass) || !class_exists($routerClass)) {
             $routerClass = '\\Microbe\\Router\\Static';
         }
@@ -64,7 +64,7 @@ class Runner {
         
         list($module, $action) = $router->route($this->request);
         if (empty($module) || empty($action)) {
-            throw new RuntimeException('route error');
+            throw new \RuntimeException('route error');
         }
 
         $this->module = $module;
@@ -76,13 +76,13 @@ class Runner {
         $namespace   = \Microbe\Microbe::$ins->mainApp->namespace . '\\Action';
         $actionClass = $namespace . '\\' . $this->module . '\\' . $this->action;
         if (!class_exists($actionClass)) {
-            throw new RuntimeException("Action class[$actionClass] not found");
+            throw new \RuntimeException("Action class[$actionClass] not found");
         }
         $actionObj = new $actionClass;
 
         // 检测具体的方法
         if (!($actionObj instanceof \Microbe\Action)) {
-            throw new RuntimeException("Action class[{$actionClass}] is not implements \\Microbe\\Action");
+            throw new \RuntimeException("Action class[{$actionClass}] is not implements \\Microbe\\Action");
         }
 
         // 创建模板引擎门面对象

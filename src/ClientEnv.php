@@ -42,7 +42,7 @@ class ClientEnv {
     集合判定: in notin :in :notin  # 指定EnvName的值是否在后面指定的值列表中
     */
     public function is($featureName) {
-        $conf = \Microbe\Microbe::$ins->mainApp->config->get('feature.' . $featureName);
+        $conf = \Microbe\Microbe::$ins->mainApp->config->get('app.feature.' . $featureName);
         if (empty($conf)) {
             return FALSE;
         }

@@ -8,7 +8,7 @@ class App {
 
     public function __construct($rootPath) {
         $this->rootPath  = $rootPath;
-        $this->config    = \Microbe\Config::load($rootPath);
+        $this->config    = \Microbe\Config::load($rootPath . '/src/conf');
         $this->namespace = $this->config->get('app.namespace');
     }
 }

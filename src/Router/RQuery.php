@@ -1,6 +1,6 @@
 <?php
 namespace Microbe\Router;
-class RQuery extends \Microbe\Router {
+class RQuery implements \Microbe\Router {
     public function route($request) {
         $moduleArgName = \Microbe\Microbe::$ins->mainApp->config->get('framework.router.module_arg_name');
         if (empty($moduleArgName)) {

@@ -1,6 +1,6 @@
 <?php
 namespace Microbe\Router;
-class RStatic extends \Microbe\Router {
+class RStatic implements \Microbe\Router {
     public function route($request) {
         preg_match(';^/(\w+)?(?:/(\w+)?)?;', $request->getCanonicalUri(), $match);
 

@@ -30,7 +30,7 @@ class Request {
         $this->posts       = $_POST;
         $this->cookies     = $_COOKIE;
         $this->requests    = $_REQUEST;
-        $this->files       = $_FILE;
+        $this->files       = $_FILES;
         $this->body        = file_get_contents('php://input');
         $this->originalUri = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
         $this->httpMethod  = !empty($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : 'GET';
@@ -39,13 +39,18 @@ class Request {
     protected function initCanonicalUri() {
         $canonicalUri = $this->originalUri;
         // strip query_string and fragment. only remain path
-        if (($position = strpos($canonicalUri, '?')) >= 0) {
+        if (($position = strpos($canonicalUri, '?')) !== FALSE) {
             $canonicalUri = substr($canonicalUri, 0, $position);
         }
 
         // strip repeat "/"
         $canonicalUri = preg_replace(';/{2,};', '/', $canonicalUri);
         $canonicalUri = '/' . trim($canonicalUri, '/');
+
+        $baseUri = '/' . trim(\Microbe\Microbe::$ins->mainApp->config->get('app.base_uri'), '/');
+        if ($baseUri != '/' && strpos($canonicalUri, $baseUri) === 0) {
+            $canonicalUri = substr($canonicalUri, strlen($baseUri));
+        }
 
         $this->canonicalUri = $canonicalUri;
     }
