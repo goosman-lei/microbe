@@ -86,7 +86,7 @@ class Runner {
         }
 
         // 创建模板引擎门面对象
-        $templateEngine = new \Microbe\TemplateEngine\Facade();
+        $templateEngine = new \Microbe\TemplateEngine\Facade($this->module, $this->action);
         
         // 设置Action对象依赖的输入输出
         $actionObj->setRequest($this->request);
