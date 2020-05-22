@@ -33,5 +33,5 @@ abstract class Action {
         $this->templateEngine = $templateEngine;
     }
 
-    public function execute();
+    abstract public function execute();
 }
