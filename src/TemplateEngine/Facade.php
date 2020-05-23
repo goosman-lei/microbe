@@ -1,6 +1,6 @@
 <?php
 namespace Microbe\TemplateEngine;
-class Facade implements \Microbe\TemplateEngine {
+class Facade {
     protected $engine;
 
     protected $module;
