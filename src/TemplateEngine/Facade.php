@@ -19,7 +19,7 @@ class Facade implements \Microbe\TemplateEngine {
                 'config'  => [],
             ],
         ],
-        'routers' => [
+        'routes' => [
             '-'      => 'smarty',          # 全局默认Smarty
             'module_a' => [
                 '-'        => 'json',      # /module_a 下所有action没有特殊配置则默认Json
@@ -44,13 +44,13 @@ class Facade implements \Microbe\TemplateEngine {
     }
 
     protected function getAdapterName() {
-        $moduleConfig = \Microbe\Microbe::$ins->mainApp->config->get('app.template_engine.routers.' . $this->module);
+        $moduleConfig = \Microbe\Microbe::$ins->mainApp->config->get('app.template_engine.routes.' . $this->module);
         if (empty($moduleConfig)) {
-            return \Microbe\Microbe::$ins->mainApp->config->get('app.template_engine.routers.-');
+            return \Microbe\Microbe::$ins->mainApp->config->get('app.template_engine.routes.*');
         }
 
         if (empty($moduleConfig[$this->action])) {
-            return $moduleConfig['-'];
+            return $moduleConfig['*'];
         }
 
         return $moduleConfig[$this->action];
