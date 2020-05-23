@@ -38,15 +38,15 @@ class Facade implements \Microbe\TemplateEngine {
         $this->action = $action;
 
         $adapterName   = $this->getAdapterName();
-        $adapterInfo   = \Microbe\Config::$ins->mainApp->config->get('app.template_engine.engines.' . $adapterName);
+        $adapterInfo   = \Microbe\Microbe::$ins->mainApp->config->get('app.template_engine.engines.' . $adapterName);
         $adapterClass  = $adapterInfo['adapter'];
         $this->engine  = new $adapterClass($adapterInfo['config']);
     }
 
     protected function getAdapterName() {
-        $moduleConfig = \Microbe\Config::$ins->mainApp->config->get('app.template_engine.routers.' . $this->module);
+        $moduleConfig = \Microbe\Microbe::$ins->mainApp->config->get('app.template_engine.routers.' . $this->module);
         if (empty($moduleConfig)) {
-            return \Microbe\Config::$ins->mainApp->config->get('app.template_engine.routers.-');
+            return \Microbe\Microbe::$ins->mainApp->config->get('app.template_engine.routers.-');
         }
 
         if (empty($moduleConfig[$this->action])) {
