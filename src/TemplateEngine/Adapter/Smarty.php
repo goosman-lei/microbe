@@ -2,6 +2,9 @@
 namespace Microbe\TemplateEngine\Adapter;
 class Smarty extends \Microbe\TemplateEngine\Adapter {
     protected $smarty;
+    protected static $custom_config_keys = [
+        'ext_name',
+    ];
 
     protected function init() {
         $this->smarty = new \Smarty();
@@ -16,7 +19,7 @@ class Smarty extends \Microbe\TemplateEngine\Adapter {
                 $this->smarty->setCacheDir($v);
             } else if ($k == 'plugin_dir') {
                 $this->smarty->setPluginsDir($v);
-            } else {
+            } else if (!in_array($k, self::$custom_config_keys)) {
                 $this->smarty->$k = $v;
             }
         }
@@ -25,7 +28,7 @@ class Smarty extends \Microbe\TemplateEngine\Adapter {
         return $this->smarty->assign($name, $value);
     }
     public function fetch($module, $action) {
-        $tplPath = "/$module/$action";
+        $tplPath = "$module/$action";
         $tplPath = isset($this->config['ext_name']) ? $tplPath . $this->config['ext_name'] : $tplPath;
         return $this->smarty->fetch($tplPath);
     }
