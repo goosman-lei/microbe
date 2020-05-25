@@ -1,10 +1,10 @@
 <?php
 namespace Microbe;
 class Runner {
-    protected $request;
-    protected $response;
-    protected $clientEnv;
-    protected $serverEnv;
+    public $request;
+    public $response;
+    public $clientEnv;
+    public $serverEnv;
 
     protected static $runner;
 
