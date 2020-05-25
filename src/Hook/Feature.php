@@ -47,6 +47,7 @@ abstract class Feature extends \Microbe\Hook {
     */
     public function is($featureName) {
         $conf = $this->config[$featureName];
+        var_dump($conf);
         if (empty($conf)) {
             return FALSE;
         }
