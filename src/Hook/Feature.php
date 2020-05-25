@@ -9,11 +9,15 @@ abstract class Feature extends \Microbe\Hook {
     }
 
     public function afterInput($request) {
-        $this->initEnv();
+        $this->initEnv($request);
         $request->regExtMethod('matchFeature', [$this, 'is']);
     }
 
-    abstract protected function initEnv();
+    abstract protected function initEnv($request);
+
+    public function set($name, $value) {
+        $this->env[$name] = $value;
+    }
 
     /*
     配置格式
