@@ -21,7 +21,7 @@ class Runner {
         $this->setupRequest();
 
         \Microbe\Microbe::init($rootPath, $this);
-        \Microbe\Microbe::prependHook('\Microbe\Hook\CanonicalUri');
+        \Microbe\Microbe::$ins->prependHook('\Microbe\Hook\CanonicalUri');
 
         \Microbe\Microbe::$ins->positiveApplyHooks('afterInput', $request);
     }
