@@ -21,6 +21,7 @@ class Runner {
 
     protected function _run($rootPath) {
         \Microbe\Microbe::init($rootPath);
+        \Microbe\Microbe::$ins->setRunner($this);
 
         $this->setupInputOutput();
     }

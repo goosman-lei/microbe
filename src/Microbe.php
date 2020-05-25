@@ -2,6 +2,7 @@
 namespace Microbe;
 class Microbe {
     public $config;
+    public $runner;
 
     public static $ins;
 
@@ -14,5 +15,9 @@ class Microbe {
             return;
         }
         self::$ins = new self($rootPath);
+    }
+
+    public function setRunner($runner) {
+        $this->runner = $runner;
     }
 }
