@@ -22,17 +22,12 @@ class Runner {
         $this->setupRequest();
 
         \Microbe\Microbe::init($rootPath, $this);
+        \Microbe\Microbe::prependHook('\Microbe\Hook\CanonicalUri');
 
         \Microbe\Microbe::$ins->positiveApplyHooks('afterInput', $request);
-
-        \Microbe\Microbe::$ins->negativeApplyHooks('beforeOutput', $response);
     }
 
     protected function setupRequest() {
         $this->request = new \Microbe\Request();
-    }
-
-    protected function setupResponse() {
-        $this->response = new \Microbe\Response();
     }
 }

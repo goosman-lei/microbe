@@ -30,8 +30,16 @@ class Microbe {
         $configs = $this->config->get('hooks');
         foreach ($configs as $hookName => $hookConfig) {
             $hookClass = $hookConfig['class'];
-            $this->hooks[$hookName] = new $hookClass($hookConfig['config']);
+            array_push($this->hooks, new $hookClass($hookConfig['config']));
         }
+    }
+
+    public function prependHook($class, $config = []) {
+        array_unshift($this->hooks, new $class($config));
+    }
+
+    public function appendHook($class, $config = []) {
+        array_push($this->hooks, new $class($config));
     }
 
     public function positiveApplyHooks($method) {

@@ -9,14 +9,13 @@ class Request {
 
     protected $body;
     protected $originalUri;
-    protected $canonicalUri;
 
     protected $params = [];
     protected $extMethods = [];
+    protected $extProperties = [];
 
     public function __construct() {
         $this->initOriginalInfo();
-        $this->initCanonicalUri();
     }
 
     protected function initOriginalInfo() {
@@ -27,25 +26,6 @@ class Request {
         $this->files       = $_FILES;
         $this->body        = file_get_contents('php://input');
         $this->originalUri = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
-    }
-
-    protected function initCanonicalUri() {
-        $canonicalUri = $this->originalUri;
-        // strip query_string and fragment. only remain path
-        if (($position = strpos($canonicalUri, '?')) !== FALSE) {
-            $canonicalUri = substr($canonicalUri, 0, $position);
-        }
-
-        // strip repeat "/"
-        $canonicalUri = preg_replace(';/{2,};', '/', $canonicalUri);
-        $canonicalUri = '/' . trim($canonicalUri, '/');
-
-        $baseUri = '/' . trim(\Microbe\Microbe::$ins->config->get('app.base_uri'), '/');
-        if ($baseUri != '/' && strpos($canonicalUri, $baseUri) === 0) {
-            $canonicalUri = substr($canonicalUri, strlen($baseUri));
-        }
-
-        $this->canonicalUri = $canonicalUri;
     }
 
     public function getQuries() {
@@ -96,10 +76,6 @@ class Request {
         return $this->originalUri;
     }
 
-    public function getCanonicalUri() {
-        return $this->canonicalUri;
-    }
-
     public function getParams() {
         return $this->params;
     }
@@ -110,6 +86,16 @@ class Request {
 
     public function setParam($k, $v) {
         $this->params[$k] = $v;
+    }
+
+    public function regExtProperty($name, $value) {
+        $this->extProperties[$name] = $value;
+    }
+
+    public function __get($name) {
+        if (array_key_exists($this->extProperties[$name])) {
+            return $this->extProperties[$name];
+        }
     }
 
     public function regExtMethod($name, $callable) {

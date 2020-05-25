@@ -2,21 +2,16 @@
 namespace Microbe\Hook;
 abstract class Feature extends \Microbe\Hook {
     protected $env = [];
-    protected $config;
 
-    public function __construct($config) {
-        $this->config = $config;
+    abstract protected function initEnv($request);
+
+    protected function set($name, $value) {
+        $this->env[$name] = $value;
     }
 
     public function afterInput($request) {
         $this->initEnv($request);
         $request->regExtMethod('matchFeature', [$this, 'is']);
-    }
-
-    abstract protected function initEnv($request);
-
-    public function set($name, $value) {
-        $this->env[$name] = $value;
     }
 
     /*
