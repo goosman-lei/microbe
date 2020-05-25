@@ -11,7 +11,7 @@ abstract class Feature extends \Microbe\Hook {
 
     public function afterInput($request) {
         $this->initEnv($request);
-        $request->regExtMethod('matchFeature', [$this, 'is']);
+        $request->regExtMethod('isFeature', [$this, 'is']);
     }
 
     /*
