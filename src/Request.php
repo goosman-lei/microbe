@@ -11,18 +11,11 @@ class Request {
     protected $originalUri;
     protected $canonicalUri;
 
-    protected $httpMethod;
-
-    protected $requestId;
-    protected $requestTime;
-
     protected $params = [];
 
     public function __construct() {
         $this->initOriginalInfo();
         $this->initCanonicalUri();
-        $this->initRequestId();
-        $this->initRequestTime();
     }
 
     protected function initOriginalInfo() {
@@ -33,7 +26,6 @@ class Request {
         $this->files       = $_FILES;
         $this->body        = file_get_contents('php://input');
         $this->originalUri = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
-        $this->httpMethod  = !empty($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : 'GET';
     }
 
     protected function initCanonicalUri() {
@@ -53,14 +45,6 @@ class Request {
         }
 
         $this->canonicalUri = $canonicalUri;
-    }
-
-    protected function initRequestId() {
-        $this->requestId = sprintf("%017d-%s", microtime(TRUE) * 1000000, substr(md5(gethostname() . '/' . posix_getpid()), 0, 16));
-    }
-
-    protected function initRequestTime() {
-        $this->requestTime = !empty($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
     }
 
     public function getQuries() {
@@ -113,18 +97,6 @@ class Request {
 
     public function getCanonicalUri() {
         return $this->canonicalUri;
-    }
-
-    public function getHttpMethod() {
-        return $this->httpMethod;
-    }
-
-    public function getRequestId() {
-        return $this->requestId;
-    }
-
-    public function getRequestTime() {
-        return $this->requestTime;
     }
 
     public function getParams() {
