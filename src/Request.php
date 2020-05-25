@@ -105,7 +105,7 @@ class Request {
     public function __call($name, $arguments) {
         if (isset($this->extMethods[$name]) && is_callable($this->extMethods[$name])) {
             $extMethod = $this->extMethods[$name];
-            call_user_func_array($extMethod, $arguments);
+            return call_user_func_array($extMethod, $arguments);
         }
     }
 }
