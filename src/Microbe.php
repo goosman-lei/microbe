@@ -7,7 +7,7 @@ class Microbe {
     public static $ins;
 
     protected function __construct($rootPath) {
-        $this->config = new \Microbe\Config($rootPath . '/conf');
+        $this->config = \Microbe\Config::load($rootPath . '/conf');
     }
 
     public static function init($rootPath) {
