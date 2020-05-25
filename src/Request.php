@@ -12,6 +12,7 @@ class Request {
     protected $canonicalUri;
 
     protected $params = [];
+    protected $extMethods = [];
 
     public function __construct() {
         $this->initOriginalInfo();
@@ -109,5 +110,16 @@ class Request {
 
     public function setParam($k, $v) {
         $this->params[$k] = $v;
+    }
+
+    public function regExtMethod($name, $callable) {
+        $this->extMethods[$name] = $callable;
+    }
+
+    public function __call($name, $arguments) {
+        if (isset($this->extMethods[$name]) && is_callable($this->extMethods[$name])) {
+            $extMethod = $this->extMethods[$name];
+            call_user_func_array($extMethod, $arguments);
+        }
     }
 }

@@ -4,20 +4,50 @@ class Microbe {
     public $config;
     public $runner;
 
+    protected $hooks = [];
+
     public static $ins;
 
-    protected function __construct($rootPath) {
-        $this->config = \Microbe\Config::load($rootPath . '/conf');
+    protected function __construct() {
     }
 
-    public static function init($rootPath) {
+    public static function init($rootPath, $runner) {
         if (isset(self::$ins)) {
             return;
         }
-        self::$ins = new self($rootPath);
+        self::$ins = new self();
+        self::$ins->_init($rootPath, $runner);
     }
 
-    public function setRunner($runner) {
+    protected function _init($rootPath, $runner) {
+        $this->config = \Microbe\Config::load($rootPath . '/conf');
         $this->runner = $runner;
+
+        $this->initHooks();
     }
+
+    protected function initHooks() {
+        $configs = $this->config->get('hooks');
+        foreach ($configs as $hookName => $hookConfig) {
+            $hookClass = $hookConfig['class'];
+            $this->hooks[$hookName] = new $hookClass($hookConfig['config']);
+        }
+    }
+
+    public function positiveApplyHooks($method) {
+        $argv = func_get_args();
+        $argv = array_slice($argv, 1);
+        foreach ($this->hooks as $hook) {
+            call_user_func_array([$hook, $method], $argv);
+        }
+    }
+
+    public function negativeApplyHooks($method) {
+        $argv = func_get_args();
+        $argv = array_slice($argv, 1);
+        foreach ($this->hooks as $hook) {
+            call_user_func_array([$hook, $method], $argv);
+        }
+    }
+
 }

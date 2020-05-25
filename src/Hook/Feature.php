@@ -1,14 +1,19 @@
 <?php
-namespace Microbe;
-class ClientEnv {
+namespace Microbe\Hook;
+abstract class Feature extends \Microbe\Hook {
     protected $env = [];
+    protected $config;
 
-    public function __construct() {
+    public function __construct($config) {
+        $this->config = $config;
     }
 
-    public function set($name, $value) {
-        $this->env[$name] = $value;
+    public function afterInput($request) {
+        $this->initEnv();
+        $request->regExtMethod('matchFeature', [$this, 'is']);
     }
+
+    abstract protected function initEnv();
 
     /*
     配置格式
@@ -42,7 +47,7 @@ class ClientEnv {
     集合判定: in notin :in :notin  # 指定EnvName的值是否在后面指定的值列表中
     */
     public function is($featureName) {
-        $conf = \Microbe\Microbe::$ins->config->get('app.feature.' . $featureName);
+        $conf = $this->config[$featureName];
         if (empty($conf)) {
             return FALSE;
         }

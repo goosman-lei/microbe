@@ -3,8 +3,6 @@ namespace Microbe;
 class Runner {
     public $request;
     public $response;
-    public $clientEnv;
-    public $serverEnv;
 
     protected static $runner;
 
@@ -20,17 +18,14 @@ class Runner {
     }
 
     protected function _run($rootPath) {
-        \Microbe\Microbe::init($rootPath);
-        \Microbe\Microbe::$ins->setRunner($this);
-
-        $this->setupInputOutput();
-    }
-
-    protected function setupInputOutput() {
         $this->setupResponse();
         $this->setupRequest();
-        $this->setupClientEnv();
-        $this->setupServerEnv();
+
+        \Microbe\Microbe::init($rootPath, $this);
+
+        \Microbe\Microbe::$ins->positiveApplyHooks('afterInput', $request);
+
+        \Microbe\Microbe::$ins->negativeApplyHooks('beforeOutput', $response);
     }
 
     protected function setupRequest() {
@@ -39,13 +34,5 @@ class Runner {
 
     protected function setupResponse() {
         $this->response = new \Microbe\Response();
-    }
-
-    protected function setupClientEnv() {
-        $this->clientEnv = new \Microbe\ClientEnv();
-    }
-
-    protected function setupServerEnv() {
-        $this->serverEnv = new \Microbe\ServerEnv();
     }
 }
