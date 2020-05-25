@@ -2,7 +2,6 @@
 namespace Microbe;
 class Runner {
     public $request;
-    public $response;
 
     protected static $runner;
 
@@ -23,7 +22,7 @@ class Runner {
         \Microbe\Microbe::init($rootPath, $this);
         \Microbe\Microbe::$ins->prependHook('\Microbe\Hook\CanonicalUri');
 
-        \Microbe\Microbe::$ins->positiveApplyHooks('afterInput', $request);
+        \Microbe\Microbe::$ins->positiveApplyHooks('afterInput', $this->request);
     }
 
     protected function setupRequest() {
