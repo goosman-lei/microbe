@@ -18,7 +18,6 @@ class Runner {
     }
 
     protected function _run($rootPath) {
-        $this->setupResponse();
         $this->setupRequest();
 
         \Microbe\Microbe::init($rootPath, $this);
