@@ -19,8 +19,7 @@ class Runner {
 
         \Microbe\Microbe::init($config);
 
-        \Microbe\Microbe::$ins->milestoneDefine('init', new \Microbe\Chain\Stub());
-        \Microbe\Microbe::$ins->milestoneInstallChain('init');
+        \Microbe\Microbe::$ins->milestone(new \Microbe\Chain\Stub(), 'init');
 
         \Microbe\Microbe::$ins->chainHead->exec($request, $response);
     }

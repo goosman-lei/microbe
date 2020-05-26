@@ -18,53 +18,70 @@ class Microbe {
         self::$ins->config = config;
     }
 
-    public function milestoneDefine($name, \Microbe\Chain $chain) {
-        $this->milestones[$name] = $chain;
+    public function milestone(\Microbe\Chain $chain, $milestoneName) {
+        $chain->markMilestone($milestoneName);
         $this->appendChain($chain);
-    }
-
-    public function milestoneInstallChain($name) {
-        if (!isset($this->milestones[$name])) {
-            throw new RuntimeException("Milestone [$name] not defined");
-        }
-        /* 系统层级的责任链安装 */
-        $argv   = func_get_args();
-        $systemChains = array_slice($argv, 1);
-        foreach ($systemChains as $chain) {
-            $this->milestoneAppendChain($name, $chain);
-        }
+        $this->milestones[$milestoneName] = $chain;
 
         /* 用户自定义的责任链安装 */
-        $chains = $this->config->get('milestone.' . $name);
-        if (empty($chains)) {
+        $userChains = $this->config->get('milestone.' . $milestoneName);
+        if (empty($userChains)) {
             return;
         }
-        foreach ($chains as $chain) {
+        foreach ($userChains as $chain) {
             $class  = $chain['class'];
-            $config = $chain['class'];
-            $this->milestoneAppendChain($name, new $class($config['config']));
+            $config = $chain['config'];
+            $this->appendChain(new $class($config['config']), $milestoneName);
         }
+
     }
 
-    protected function milestoneAppendChain($name, \Microbe\Chain $chain) {
-        $milestoneChain = $this->milestones[$name];
-        $milestoneChain->prev->next = $chain;
-        $chain->prev = $milestoneChain->prev;
-        $chain->next = $milestoneChain;
-        $milestoneChain->prev = $chain;
-    }
-
-    protected function appendChain(\Microbe\Chain $chain) {
-        if (isset($this->chainTail)) {
-            $chain->next = null;
-            $chain->prev = $this->chainTail;
-            $this->chainTail->next = $chain;
-            $this->chainTail       = $chain;
+    public function appendChain(\Microbe\Chain $chain, $milestoneName = null) {
+        if (!isset($milestoneName) || !isset($this->milestones[$milestoneName])) {
+        // 直接追加到责任链链尾
+            if (!isset($this->chainTail)) {
+                $this->chainHead = $this->chainTail = $chain;
+            } else {
+                $this->chainTail->next = $chain;
+                $chain->prev           = $this->chainTail;
+                $this->chainTail       = $chain;
+            }
         } else {
-            $chain->prev = null;
-            $chain->next = null;
-            $this->chainTail = $this->chainHead = $chain;
+        // 追加到指定里程碑的链尾
+            $milestone = $this->milestones[$milestoneName];
+            if (isset($milestone->prev)) {
+                $milestone->prev->next = $chain;
+                $chain->prev = $milestone->prev;
+            }
+            $chain->next     = $milestone;
+            $milestone->prev = $chain;
         }
     }
 
+    public function prependChain(\Microbe\Chain $chain, $milestoneName = null) {
+        if (!isset($milestoneName) || !isset($this->milestones[$milestoneName])) {
+        // 直接插入到责任链链头
+            if (!isset($this->chainHead)) {
+                $this->chainHead = $this->chainTail = $chain;
+            } else {
+                $this->chainHead->prev = $chain;
+                $chain->next           = $this->chainHead;
+                $this->chainHead       = $chain;
+            }
+        } else {
+        // 插入到指定里程碑的链头
+            // 寻找指定里程碑的当前链头
+            $tmpChain = $this->milestones[$milestoneName];
+            while (isset($tmpChain->prev) && !$tmpChain->prev->isMilestone()){
+                $tmpChain = $tmpChain->prev;
+            }
+            // 插入
+            if (isset($tmpChain->prev)) {
+                $tmpChain->prev->next = $chain;
+                $chain->prev = $tmpChain->prev;
+            }
+            $chain->next     = $tmpChain;
+            $tmpChain->prev = $chain;
+        }
+    }
 }
