@@ -1,5 +1,5 @@
 <?php
-namespace \Microbe\Chain;
+namespace Microbe\Chain;
 /**
  * Feature 
  * 增强$request:
@@ -14,15 +14,15 @@ abstract class Feature extends \Microbe\Chain {
     /*
     初始化$env和$extMethod配置
     */
-    abstract protected function init(\Microbe\Cgi\Request $request);
+    abstract protected function init($request);
 
     protected function set($name, $value) {
         $this->env[$name] = $value;
     }
 
-    public function exec(\Microbe\Cgi\Request $request, \Microbe\Cgi\Response $response) {
+    public function exec($request, $response) {
         $this->init($request);
-        $this->regExtMethod($this->extMethod, [$this, 'is']);
+        $request->regExtMethod($this->extMethod, [$this, 'is']);
 
         $this->doNext($request, $response);
     }

@@ -4,9 +4,15 @@ abstract class Chain {
     public $prev;
     public $next;
 
+    protected $config;
+
     protected $milestone;
 
-    abstract public function exec(\Microbe\Request $request, \Microbe\Response $response);
+    public function __construct($config = []) {
+        $this->config = $config;
+    }
+
+    abstract public function exec($request, $response);
 
     final public function doNext($request, $response) {
         if (isset($this->next)) {

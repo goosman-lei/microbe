@@ -7,7 +7,7 @@ namespace \Microbe\Cgi\Chain;
  * @author goosman.lei <goosman.lei@gmail.com> 
  */
 class CanonicalUri extends \Microbe\Chain {
-    public function exec(\Microbe\Cgi\Request $request, \Microbe\Cgi\Response $response) {
+    public function exec($request, $response) {
         $canonicalUri = $request->getOriginalUri();
         // strip query_string and fragment. only remain path
         if (($position = strpos($canonicalUri, '?')) !== FALSE) {

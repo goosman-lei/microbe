@@ -14,15 +14,15 @@ class Runner {
     }
 
     public function init(\Microbe\Config $config) {
-        $response = new \Microbe\Cgi\Response();
-        $request  = new \Microbe\Cgi\Request();
-
         \Microbe\Microbe::init($config);
 
         \Microbe\Microbe::$ins->milestone(new \Microbe\Chain\Root(), 'init');
     }
 
     public function run() {
+        $response = new \Microbe\Cgi\Response();
+        $request  = new \Microbe\Cgi\Request();
+
         \Microbe\Microbe::$ins->chainHead->exec($request, $response);
     }
 }

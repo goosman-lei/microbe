@@ -3,6 +3,9 @@ namespace Microbe;
 class Microbe {
     public $config;
 
+    public $chainHead;
+    public $chainTail;
+
     protected $milestones = [];
 
     public static $ins;
@@ -15,7 +18,7 @@ class Microbe {
             return ;
         }
         self::$ins         = new self();
-        self::$ins->config = config;
+        self::$ins->config = $config;
     }
 
     public function milestone(\Microbe\Chain $chain, $milestoneName) {
@@ -31,9 +34,8 @@ class Microbe {
         foreach ($userChains as $chain) {
             $class  = $chain['class'];
             $config = $chain['config'];
-            $this->appendChain(new $class($config['config']), $milestoneName);
+            $this->prependChain(new $class($config), $milestoneName);
         }
-
     }
 
     public function appendChain(\Microbe\Chain $chain, $milestoneName = null) {
@@ -55,6 +57,10 @@ class Microbe {
             }
             $chain->next     = $milestone;
             $milestone->prev = $chain;
+
+            if ($chain->prev == null) {
+                $this->chainHead = $chain;
+            }
         }
     }
 
@@ -82,6 +88,10 @@ class Microbe {
             }
             $chain->next     = $tmpChain;
             $tmpChain->prev = $chain;
+
+            if ($chain->prev == null) {
+                $this->chainHead = $chain;
+            }
         }
     }
 }
