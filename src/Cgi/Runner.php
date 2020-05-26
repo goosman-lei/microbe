@@ -19,7 +19,7 @@ class Runner {
 
         \Microbe\Microbe::init($config);
 
-        \Microbe\Microbe::$ins->milestone(new \Microbe\Chain\Stub(), 'init');
+        \Microbe\Microbe::$ins->milestone(new \Microbe\Chain\Root(), 'init');
     }
 
     public function run() {
