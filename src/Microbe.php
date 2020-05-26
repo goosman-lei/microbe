@@ -58,13 +58,11 @@ class Microbe {
             if (isset($milestone->prev)) {
                 $milestone->prev->next = $chain;
                 $chain->prev = $milestone->prev;
+            } else { // $milestone是链头
+                $this->chainHead = $chain;
             }
             $chain->next     = $milestone;
             $milestone->prev = $chain;
-
-            if ($chain->prev == null) {
-                $this->chainHead = $chain;
-            }
         }
     }
 
@@ -89,13 +87,11 @@ class Microbe {
             if (isset($tmpChain->prev)) {
                 $tmpChain->prev->next = $chain;
                 $chain->prev = $tmpChain->prev;
+            } else { // $milestone是链头
+                $this->chainHead = $chain;
             }
             $chain->next     = $tmpChain;
             $tmpChain->prev = $chain;
-
-            if ($chain->prev == null) {
-                $this->chainHead = $chain;
-            }
         }
     }
 }
