@@ -21,6 +21,10 @@ class Microbe {
         self::$ins->config = $config;
     }
 
+    public function doChain($request, $response) {
+        $this->chainHead->exec($request, $response);
+    }
+
     public function milestone(\Microbe\Chain $chain, $milestoneName) {
         $chain->markMilestone($milestoneName);
         $this->appendChain($chain);

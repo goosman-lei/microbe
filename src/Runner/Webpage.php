@@ -23,6 +23,6 @@ class Webpage {
         $response = new \Microbe\Cgi\Response();
         $request  = new \Microbe\Cgi\Request();
 
-        \Microbe\Microbe::$ins->chainHead->exec($request, $response);
+        \Microbe\Microbe::$ins->doChain($request, $response);
     }
 }
