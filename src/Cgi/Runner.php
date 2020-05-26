@@ -13,14 +13,16 @@ class Runner {
         return self::$runner;
     }
 
-    public function run(\Microbe\Config $config) {
+    public function init(\Microbe\Config $config) {
         $response = new \Microbe\Cgi\Response();
         $request  = new \Microbe\Cgi\Request();
 
         \Microbe\Microbe::init($config);
 
         \Microbe\Microbe::$ins->milestone(new \Microbe\Chain\Stub(), 'init');
+    }
 
+    public function run(\Microbe\Config $config) {
         \Microbe\Microbe::$ins->chainHead->exec($request, $response);
     }
 }
