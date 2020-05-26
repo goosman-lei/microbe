@@ -1,18 +1,32 @@
 <?php
-namespace Microbe\Hook;
-abstract class Feature extends \Microbe\Hook {
+namespace \Microbe\Chain;
+/**
+ * Feature 
+ * 增强$request:
+    $request->isMatch('Feature'); // 检测当前请求是否匹配某种预定义的特征
+ * @abstract
+ * @author goosman.lei <goosman.lei@gmail.com> 
+ */
+abstract class Feature extends \Microbe\Chain {
     protected $env = [];
+    protected $extMethod = 'isMatch';
 
-    abstract protected function initEnv($request);
+    /*
+    初始化$env和$extMethod配置
+    */
+    abstract protected function init(\Microbe\Cgi\Request $request);
 
     protected function set($name, $value) {
         $this->env[$name] = $value;
     }
 
-    public function afterInput($request) {
-        $this->initEnv($request);
-        $request->regExtMethod('isFeature', [$this, 'is']);
+    public function exec(\Microbe\Cgi\Request $request, \Microbe\Cgi\Response $response) {
+        $this->init($request);
+        $this->regExtMethod($this->extMethod, [$this, 'is']);
+
+        $this->doNext($request, $response);
     }
+
 
     /*
     配置格式
@@ -245,4 +259,5 @@ abstract class Feature extends \Microbe\Hook {
 
         return FALSE;
     }
+
 }

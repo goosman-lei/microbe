@@ -1,6 +1,6 @@
 <?php
 namespace Microbe;
-abstract class Request {
+abstract class Response {
     protected $params = [];
     protected $extMethods = [];
     protected $extProperties = [];
