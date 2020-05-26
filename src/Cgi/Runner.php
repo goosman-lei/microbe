@@ -22,7 +22,7 @@ class Runner {
         \Microbe\Microbe::$ins->milestone(new \Microbe\Chain\Stub(), 'init');
     }
 
-    public function run(\Microbe\Config $config) {
+    public function run() {
         \Microbe\Microbe::$ins->chainHead->exec($request, $response);
     }
 }
