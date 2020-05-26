@@ -1,6 +1,6 @@
 <?php
-namespace Microbe\Cgi;
-class Runner {
+namespace Microbe\Runner;
+class Webpage {
     protected static $runner;
 
     protected function __construct() {
