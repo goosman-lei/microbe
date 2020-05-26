@@ -1,6 +1,6 @@
 <?php
 namespace Microbe\Cgi;
-class Request extends \Microbe\Request {
+class Request {
     protected $gets;
     protected $posts;
     protected $cookies;

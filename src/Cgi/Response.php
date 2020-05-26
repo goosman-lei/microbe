@@ -1,6 +1,6 @@
 <?php
 namespace Microbe\Cgi;
-class Response extends \Microbe\Response {
+class Response {
     protected $bodyBuffer = '';
     protected $headers = [];
     protected $cookies = [];
