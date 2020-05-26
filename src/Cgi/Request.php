@@ -1,6 +1,6 @@
 <?php
 namespace Microbe\Cgi;
-class Request {
+class Request extends \Microbe\Scalable {
     protected $gets;
     protected $posts;
     protected $cookies;
