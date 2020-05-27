@@ -2,7 +2,6 @@
 namespace Microbe\Runner;
 class Webpage {
     protected static $runner;
-
     protected function __construct() {
     }
 
@@ -21,8 +20,8 @@ class Webpage {
     }
 
     public function run() {
-        $response = new \Microbe\Cgi\Response();
         $request  = new \Microbe\Cgi\Request();
+        $response = new \Microbe\Cgi\Response();
 
         \Microbe\Microbe::$ins->doChain($request, $response);
     }

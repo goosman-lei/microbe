@@ -1,58 +1,46 @@
 <?php
 namespace Microbe;
 class Microbe {
-    public $config;
-
-    public $chainHead;
-    public $chainTail;
+    protected $chainHead;
+    protected $chainTail;
 
     protected $chainMapping = [];
 
-    public static $ins;
+    public $config;
 
-    protected function __construct() {
-    }
+    public static $ins;
 
     public static function init(\Microbe\Config $config) {
         if (isset(self::$ins)) {
-            return ;
+            return self::$ins;
         }
-        self::$ins         = new self();
+        self::$ins = new self();
         self::$ins->config = $config;
+        return self::$ins;
     }
-
+    
     public function doChain($request, $response) {
-        $this->chainHead->exec($request, $response);
+        if (isset($this->chainHead)) {
+            $this->chainHead->exec($request, $response);
+        }
     }
 
-    /**
-     * installUserChain 
-     * 用户定义的责任链配置:
-     $chains = [
-        'antispam' => [    # KEY为节点的名字. 用户自定义的名字, 不允许以"-"开始. 系统定义的名字, 全部以"-"开始
-            'class'     => # 责任链的处理类
-            'config'    => # 责任链的具体配置
-            'direction' => # 责任链添加的方向: append or prepend
-            'target'    => # 责任链要添加的相对位置. 默认为空, 代表整条链的首尾
-        ],
-     ];
-     * @access public
-     * @return void
-     */
     public function installUserChain() {
-        /* 用户自定义的责任链安装 */
         $userChains = $this->config->get('framework.chain');
         if (empty($userChains)) {
             return;
         }
+
         foreach ($userChains as $chainName => $chainInfo) {
             if ($chainName[0] == '-') {
                 throw new RuntimeException("Invalid user chain name[{$chainName}], it shouldn't begin with '-'");
             }
-            $class     = $chainInfo['class'];
-            $config    = $chainInfo['config'];
+
+            $class  = $chainInfo['class'];
+            $config = $chainInfo['config'];
             $direction = $chainInfo['direction'] == 'prepend' ? 'prepend' : 'append';
             $target    = empty($chainInfo['target']) ? null : $chainInfo['target'];
+
             if ($direction == 'append') {
                 $this->appendChain(new $class($config), $chainName, $target);
             } else {
@@ -112,4 +100,5 @@ class Microbe {
         }
         $this->chainMapping[$chainName] = $chain;
     }
+
 }

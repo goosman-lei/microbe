@@ -1,30 +1,7 @@
 <?php
 namespace Microbe\Config;
-/**
- * File 
- * 对于目录结构:
-    conf/
-        system/
-            app.php
-                $a = 1;
-                $b = ['c' => 2];
-        framework.php
-            $d = 'Hello';
-
-    $confiArr = [
-        'system' => [
-            'app' => [
-                'a' => 1,
-                'b' => ['c' => 2],
-            ],
-        ],
-        'framework' => [
-            'd' => 'Hello',
-        ],
-    ];
- * @author goosman.lei <goosman.lei@gmail.com> 
- */
 class File implements \Microbe\Config {
+
     protected $confArr;
 
     public function __construct($rootPath) {
@@ -32,33 +9,25 @@ class File implements \Microbe\Config {
     }
 
     /**
-     * get
-     * 获取配置项
-     * @param mixed $key
+     * get 
+     * 
+     * @param mixed $key  A.B.C
+     * @param mixed $default 
      * @access public
      * @return void
      */
-    public function get($key, $default = NULL) {
+    public function get($key, $default = null) {
         $keyEles = explode('.', $key);
-        $confVal = $this->confArr;
+        $confValue = $this->confArr;
         foreach ($keyEles as $keyEle) {
-            if (!isset($confVal[$keyEle])) {
+            if (!isset($confValue[$keyEle])) {
                 return $default;
             }
-            $confVal = $confVal[$keyEle];
+            $confValue = $confValue[$keyEle];
         }
-        return $confVal;
+        return $confValue;
     }
-
-    /**
-     * set
-     * 覆盖设置一个配置项
-     * @param mixed $key
-     * @param mixed $val
-     * @access public
-     * @return void
-     */
-    public function set($key, $val) {
+    public function set($key, $value) {
         $keyEles = explode('.', $key);
         $confRef = &$this->confArr;
         foreach ($keyEles as $keyEle) {
@@ -70,6 +39,14 @@ class File implements \Microbe\Config {
         $confRef = $val;
     }
 
+    /**
+     * loadConfig 
+     * 处理递归问题, 解决目录遍历
+     * @param mixed $rootPath 
+     * @static
+     * @access protected
+     * @return void
+     */
     protected static function loadConfig($rootPath) {
         if (is_file($rootPath)) {
             return self::getConfig($rootPath);
@@ -94,6 +71,14 @@ class File implements \Microbe\Config {
         return $confArr;
     }
 
+    /**
+     * getConfig 
+     * 获取一个php文件中的所有变量
+     * @param mixed $file 
+     * @static
+     * @access protected
+     * @return void
+     */
     protected static function getConfig($file) {
         $__preInclude = get_defined_vars();
         include $file;
