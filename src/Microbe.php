@@ -101,4 +101,9 @@ class Microbe {
         $this->chainMapping[$chainName] = $chain;
     }
 
+    public function dumpChain() {
+        foreach ($this->chainMapping as $chainName => $chainConfig) {
+            echo $chainName . "<br />\n";
+        }
+    }
 }
