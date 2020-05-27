@@ -6,8 +6,6 @@ abstract class Chain {
 
     protected $config;
 
-    protected $milestone;
-
     public function __construct($config = []) {
         $this->config = $config;
     }
@@ -18,14 +16,5 @@ abstract class Chain {
         if (isset($this->next)) {
             $this->next->exec($request, $response);
         }
-    }
-
-    final public function markMilestone($name) {
-        $this->milestone = $name;
-        return $this;
-    }
-
-    final public function isMilestone() {
-        return isset($this->milestone);
     }
 }

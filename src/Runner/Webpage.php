@@ -16,7 +16,8 @@ class Webpage {
     public function init(\Microbe\Config $config) {
         \Microbe\Microbe::init($config);
 
-        \Microbe\Microbe::$ins->milestone(new \Microbe\Chain\Root(), 'init');
+        \Microbe\Microbe::$ins->appendChain(new \Microbe\Chain\Root(), '-root');
+        \Microbe\Microbe::$ins->installUserChain();
     }
 
     public function run() {

@@ -1,5 +1,29 @@
 <?php
 namespace Microbe\Config;
+/**
+ * File 
+ * 对于目录结构:
+    conf/
+        system/
+            app.php
+                $a = 1;
+                $b = ['c' => 2];
+        framework.php
+            $d = 'Hello';
+
+    $confiArr = [
+        'system' => [
+            'app' => [
+                'a' => 1,
+                'b' => ['c' => 2],
+            ],
+        ],
+        'framework' => [
+            'd' => 'Hello',
+        ],
+    ];
+ * @author goosman.lei <goosman.lei@gmail.com> 
+ */
 class File implements \Microbe\Config {
     protected $confArr;
 
