@@ -1,6 +1,6 @@
 <?php
-namespace Microbe\Runner;
-class Webpage {
+namespace Microbe\Scene\Webpage;
+class Runner {
     protected static $runner;
     protected function __construct() {
     }

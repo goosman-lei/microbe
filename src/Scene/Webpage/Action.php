@@ -1,12 +1,12 @@
 <?php
-namespace Microbe\Cgi;
+namespace Microbe\Scene\Webpage;
 abstract class Action {
     protected $request;
     protected $response;
-    public function setRequest($request) {
+    final public function setRequest($request) {
         $this->request = $request;
     }
-    public function setResponse($response) {
+    final public function setResponse($response) {
         $this->response = $response;
     }
     abstract public function exec();
