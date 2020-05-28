@@ -16,6 +16,9 @@ class Webpage {
         \Microbe\Microbe::init($config);
 
         \Microbe\Microbe::$ins->appendChain(new \Microbe\Chain\Root(), '-root');
+        \Microbe\Microbe::$ins->appendChain(new \Microbe\Cgi\Chain\CanonicalUri(), '-canonical-uri');
+        \Microbe\Microbe::$ins->appendChain(new \Microbe\Cgi\Chain\Router(), '-route');
+        \Microbe\Microbe::$ins->appendChain(new \Microbe\Cgi\Chain\Dispatcher(), '-dispatch');
         \Microbe\Microbe::$ins->installUserChain();
     }
 
