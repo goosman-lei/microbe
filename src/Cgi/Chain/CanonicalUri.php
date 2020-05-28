@@ -18,7 +18,7 @@ class CanonicalUri extends \Microbe\Chain {
         $canonicalUri = preg_replace(';/{2,};', '/', $canonicalUri);
         $canonicalUri = '/' . trim($canonicalUri, '/');
 
-        $baseUri = '/' . trim(\Microbe\Microbe::$ins->config->get('app.base_uri'), '/');
+        $baseUri = '/' . trim($this->config['base_uri'], '/');
         if ($baseUri != '/' && strpos($canonicalUri, $baseUri) === 0) {
             $canonicalUri = substr($canonicalUri, strlen($baseUri));
         }
