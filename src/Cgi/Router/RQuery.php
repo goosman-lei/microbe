@@ -1,6 +1,6 @@
 <?php
 namespace Microbe\Cgi\Router;
-class RQuery implements \Microbe\Cgi\Router {
+class RQuery extends \Microbe\Cgi\Router {
     public function route($request, $response) {
         $argNameModule = $this->config['arg_name_module'] ?: 'module';
         $argNameAction = $this->config['arg_name_action'] ?: 'action';
