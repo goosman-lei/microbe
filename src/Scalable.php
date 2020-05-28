@@ -22,7 +22,7 @@ class Scalable {
     }
 
     public function __get($name) {
-        if (array_key_exists($this->extProperties[$name])) {
+        if (array_key_exists($name, $this->extProperties)) {
             return $this->extProperties[$name];
         }
     }
