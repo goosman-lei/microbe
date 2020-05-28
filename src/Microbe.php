@@ -102,8 +102,10 @@ class Microbe {
     }
 
     public function dumpChain() {
-        foreach ($this->chainMapping as $chainName => $chainConfig) {
-            echo $chainName . "<br />\n";
+        $chain = $this->chainHead;
+        while (isset($chain)) {
+            echo get_class($chain) . "<br />\n";
+            $chain = $chain->next;
         }
     }
 }

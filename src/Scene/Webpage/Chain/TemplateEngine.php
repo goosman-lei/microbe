@@ -2,7 +2,7 @@
 namespace Microbe\Scene\Webpage\Chain;
 class TemplateEngine extends \Microbe\Chain {
     public function exec($request, $response) {
-        $moudle = $request->routeModule;
+        $module = $request->routeModule;
         $action = $request->routeAction;
 
         \Microbe\Scene\Webpage\TemplateEngine\Factory::init($this->config);
