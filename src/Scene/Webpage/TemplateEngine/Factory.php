@@ -1,19 +1,19 @@
 <?php
 namespace Microbe\Scene\Webpage\TemplateEngine;
 class Factory {
-    protected static $factory;
+    public static $factory;
 
     protected $config;
 
-    protected function __construct($config) {
-        $this->config = $config;
+    protected function __construct() {
     }
 
-    public static function getInstance($config) {
-        if (!isset(self::$factory)) {
-            self::$factory = new self($config);
+    public static function init($config) {
+        if (isset(self::$factory)) {
+            return;
         }
-        return self::$factory;
+        self::$factory = new self();
+        self::$factory->config = $config;
     }
 
     public function getTemplateEngine($module, $action) {
