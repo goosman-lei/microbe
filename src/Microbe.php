@@ -72,6 +72,7 @@ class Microbe {
             $chain->prev = $target;
             $target->next = $chain;
         }
+        $chain->name = $chainName;
         $this->chainMapping[$chainName] = $chain;
     }
 
@@ -98,13 +99,14 @@ class Microbe {
             $chain->next     = $target;
             $target->prev = $chain;
         }
+        $chain->name = $chainName;
         $this->chainMapping[$chainName] = $chain;
     }
 
     public function dumpChain() {
         $chain = $this->chainHead;
         while (isset($chain)) {
-            echo get_class($chain) . "<br />\n";
+            printf("%-20s\t%s<br />\n", $chain->name, get_class($chain));
             $chain = $chain->next;
         }
     }

@@ -4,6 +4,8 @@ abstract class Chain {
     public $prev;
     public $next;
 
+    public $name;
+
     protected $config;
 
     public function __construct($config = []) {
