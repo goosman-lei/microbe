@@ -75,8 +75,9 @@ class Error extends \Microbe\Chain {
 
     public function doFailure($msg, $datas) {
         $btrace = debug_backtrace();
-        array_pop($btrace);
-        $trace  = array_pop($btrace);
+        array_shift($btrace);
+        array_shift($btrace);
+        $trace  = array_shift($btrace);
         $this->failureHandler([
             'type'  => 'failure',
             'msg'   => $msg,
