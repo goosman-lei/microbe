@@ -19,11 +19,12 @@ class Error extends \Microbe\Chain {
     }
 
     public function listenError() {
-        set_error_handler(function($errno, $errstr, $errfile, $errline, $errcontext) use($this) {
-            $this->doError($errno, $errstr, $errfile, $errline, $errcontext);
+        $response = $this->response;
+        set_error_handler(function($errno, $errstr, $errfile, $errline, $errcontext) use($response) {
+            $response->doError($errno, $errstr, $errfile, $errline, $errcontext);
         }, E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR);
-        set_exception_handler(function($exception) use($this) {
-            $this->doException($exception);
+        set_exception_handler(function($exception) use($response) {
+            $response->doException($exception);
         });
     }
 
