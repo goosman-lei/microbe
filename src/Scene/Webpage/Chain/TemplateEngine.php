@@ -27,7 +27,7 @@ class TemplateEngine extends \Microbe\Chain {
         $response->appendBody($text);
     }
 
-    protected function failureHandler($request, $response, $failureInfo) {
+    public function failureHandler($request, $response, $failureInfo) {
         if (!empty($this->config['error_tpl'])) {
             $this->templateEngine->assign($failureInfo);
             $text = $this->templateEngine->render($this->config['error_tpl']);

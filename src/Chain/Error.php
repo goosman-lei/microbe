@@ -15,20 +15,20 @@ class Error extends \Microbe\Chain {
         $this->doNext($request, $response);
     }
 
-    protected function regFailureHandler($callable) {
+    public function regFailureHandler($callable) {
         array_push($this->failureHandlers, $callable);
     }
 
-    protected function failureHandler($failureInfo) {
+    public function failureHandler($failureInfo) {
         $handlers = array_reverse($this->failureHandlers);
         foreach ($handlers as $handler) {
-            $handler($request, $response, $failureInfo);
+            $handler($this->request, $this->response, $failureInfo);
         }
         $this->response->output();
         exit;
     }
 
-    protected function doError($msg, $datas = []) {
+    public function doError($msg, $datas = []) {
         $this->failureHandler([
             'type'  => 'error',
             'msg'   => $msg,
@@ -36,7 +36,7 @@ class Error extends \Microbe\Chain {
         ]);
     }
 
-    protected function doException($msg, $datas = []) {
+    public function doException($msg, $datas = []) {
         $this->failureHandler([
             'type'  => 'exception',
             'msg'   => $msg,
@@ -44,7 +44,7 @@ class Error extends \Microbe\Chain {
         ]);
     }
 
-    protected function doFailure($msg, $datas) {
+    public function doFailure($msg, $datas) {
         $this->failureHandler([
             'type'  => 'failure',
             'msg'   => $msg,
