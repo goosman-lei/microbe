@@ -51,11 +51,10 @@ class Error extends \Microbe\Chain {
         $this->failureHandler([
             'type'  => 'error',
             'msg'   => $errstr,
+            'file'  => $errfile,
+            'line'  => $errline,
             'datas' => [
                 'errno'      => $errno,
-                'errstr'     => $errstr,
-                'errfile'    => $errfile,
-                'errline'    => $errline,
                 'errcontext' => $errcontext,
             ],
         ]);
@@ -65,20 +64,24 @@ class Error extends \Microbe\Chain {
         $this->failureHandler([
             'type'  => 'exception',
             'msg'   => $exception->getMessage(),
+            'file'  => $exception->getFile(),
+            'line'  => $exception->getLine(),
             'datas' => [
                 'code'  => $exception->getCode(),
-                'msg'   => $exception->getMessage(),
-                'file'  => $exception->getFile(),
-                'line'  => $exception->getLine(),
                 'trace' => $exception->getTrace(),
             ],
         ]);
     }
 
     public function doFailure($msg, $datas) {
+        $btrace = debug_backtrace();
+        array_pop($btrace);
+        $trace  = array_pop($btrace);
         $this->failureHandler([
             'type'  => 'failure',
             'msg'   => $msg,
+            'file'  => $trace['file'],
+            'line'  => $trace['line'],
             'datas' => $datas,
         ]);
     }
