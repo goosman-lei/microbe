@@ -32,6 +32,7 @@ class TemplateEngine extends \Microbe\Chain {
             $this->templateEngine->assign($failureInfo);
             $text = $this->templateEngine->render($this->config['error_tpl']);
             $response->appendBody($text);
+            return TRUE;
         }
     }
 }

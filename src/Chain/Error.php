@@ -12,7 +12,24 @@ class Error extends \Microbe\Chain {
         $response->regExtMethod('doError', [$this, 'doError']);
         $response->regExtMethod('doException', [$this, 'doException']);
         $response->regExtMethod('doFailure', [$this, 'doFailure']);
+
+        $this->listenError();
+
         $this->doNext($request, $response);
+    }
+
+    public function listenError() {
+        set_error_handler(function($errno, $errstr, $errfile, $errline, $errcontext) use($this) {
+            $this->doError($errno, $errstr, $errfile, $errline, $errcontext);
+        }, E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR);
+        set_exception_handler(function($exception) use($this) {
+            $this->doException($exception);
+        });
+    }
+
+    public function systemFailureHandler($request, $response, $failureInfo) {
+        $response->appendBody(json_encode($failureInfo, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        return TRUE;
     }
 
     public function regFailureHandler($callable) {
@@ -22,25 +39,38 @@ class Error extends \Microbe\Chain {
     public function failureHandler($failureInfo) {
         $handlers = array_reverse($this->failureHandlers);
         foreach ($handlers as $handler) {
-            $handler($this->request, $this->response, $failureInfo);
+            if ($handler($this->request, $this->response, $failureInfo)) {
+                $this->response->output();
+                exit;
+            }
         }
-        $this->response->output();
-        exit;
     }
 
-    public function doError($msg, $datas = []) {
+    public function doError($errno, $errstr, $errfile, $errline, $errcontext) {
         $this->failureHandler([
             'type'  => 'error',
-            'msg'   => $msg,
-            'datas' => $datas,
+            'msg'   => $errstr,
+            'datas' => [
+                'errno'      => $errno,
+                'errstr'     => $errstr,
+                'errfile'    => $errfile,
+                'errline'    => $errline,
+                'errcontext' => $errcontext,
+            ],
         ]);
     }
 
-    public function doException($msg, $datas = []) {
+    public function doException($exception) {
         $this->failureHandler([
             'type'  => 'exception',
-            'msg'   => $msg,
-            'datas' => $datas,
+            'msg'   => $exception->getMessage(),
+            'datas' => [
+                'code'  => $exception->getCode(),
+                'msg'   => $exception->getMessage(),
+                'file'  => $exception->getFile(),
+                'line'  => $exception->getLine(),
+                'trace' => $exception->getTrace(),
+            ],
         ]);
     }
 
