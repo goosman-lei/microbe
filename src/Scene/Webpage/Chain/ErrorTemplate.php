@@ -1,6 +1,6 @@
 <?php
 namespace Microbe\Scene\Webpage\Chain;
-class TemplateEngine extends \Microbe\Chain {
+class ErrorTemplate extends \Microbe\Chain {
 
     public function exec($request, $response) {
         $response->regFailureHandler([$this, 'failureHandler']);
