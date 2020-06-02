@@ -32,7 +32,7 @@ class Phtml extends Abs {
 
     protected function realRender($tplPath) {
         if (!is_file($tplPath)) {
-            throw new RuntimeException("phtml template file [{$tplPath}] does not exists");
+            throw new \RuntimeException("phtml template file [{$tplPath}] does not exists");
         }
         ob_start();
         extract($this->tplDatas);
