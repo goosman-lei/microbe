@@ -1,8 +1,6 @@
 <?php
 namespace Microbe\Scene\Webpage\Chain;
 class TemplateEngine extends \Microbe\Chain {
-    protected $templateEngine;
-
     public function exec($request, $response) {
         $module = $request->routeModule;
         $action = $request->routeAction;
@@ -16,23 +14,10 @@ class TemplateEngine extends \Microbe\Chain {
 
         $response->regExtProperty('templateEngine', $templateEngine);
 
-        $this->templateEngine = $templateEngine;
-
-        $response->regFailureHandler([$this, 'failureHandler']);
-
         $this->doNext($request, $response);
 
         $text = $templateEngine->render($module . '/' . $action);
 
         $response->appendBody($text);
-    }
-
-    public function failureHandler($request, $response, $failureInfo) {
-        if (!empty($this->config['error_tpl'])) {
-            $this->templateEngine->assign($failureInfo);
-            $text = $this->templateEngine->render($this->config['error_tpl']);
-            $response->appendBody($text);
-            return TRUE;
-        }
     }
 }
