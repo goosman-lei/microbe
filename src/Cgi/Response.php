@@ -5,7 +5,7 @@ class Response extends \Microbe\Scalable {
     protected $headers = [];
     protected $cookies = [];
 
-    protected function output() {
+    public function output() {
         foreach ($this->cookies as $cookie) {
             call_user_func_array('setcookie', $cookie);
         }
@@ -15,16 +15,6 @@ class Response extends \Microbe\Scalable {
         }
 
         echo $this->bodyBuffer;
-    }
-
-    public function success() {
-        $this->output();
-        exit;
-    }
-
-    public function failure() {
-        $this->output();
-        exit;
     }
 
     public function appendBody($text) {
