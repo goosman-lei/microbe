@@ -49,7 +49,7 @@ class Request extends \Microbe\Scalable {
         return $this->argc;
     }
 
-    public function getEnv($name, $default = null) {
+    public function getEnv($name = null, $default = null) {
         $env = getenv($name);
         return $env ?: $default;
     }
