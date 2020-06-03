@@ -22,6 +22,7 @@ class Request extends \Microbe\Scalable {
         } else if ($name == 'stdin') {
             return $this->stdin;
         }
+        return parent::__get($name);
     }
 
     public function getOptions() {
