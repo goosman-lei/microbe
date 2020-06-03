@@ -1,5 +1,5 @@
 <?php
-namespace Microbe\Cgi\Chain;
+namespace Microbe\Scene\Webpage\Chain;
 class Router extends \Microbe\Chain {
     public function exec($request, $response) {
         $routerClass = $this->config['class'];

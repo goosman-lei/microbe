@@ -1,5 +1,5 @@
 <?php
-namespace Microbe\Cgi\Chain;
+namespace Microbe\Scene\Webpage\Chain;
 /**
  * CanonicalUri 
  * 增强$request
