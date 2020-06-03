@@ -1,5 +1,5 @@
 <?php
-namespace Microbe\Cgi\Chain;
+namespace Microbe\Cli\Chain;
 class Dispatcher extends \Microbe\Chain {
     public function exec($request, $response) {
         $actionNamespace = $this->config['namespace'];
