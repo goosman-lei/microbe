@@ -16,11 +16,11 @@ class Runner {
         \Microbe\Microbe::init($config);
 
         \Microbe\Microbe::$ins->appendChain(new \Microbe\Chain\Root(), '-root');
-        \Microbe\Microbe::$ins->appendChain(new \Microbe\Cgi\Chain\CanonicalUri($config->get('scene.webpage.canonicalUri')), '-canonical-uri');
-        \Microbe\Microbe::$ins->appendChain(new \Microbe\Cgi\Chain\Router($config->get('scene.webpage.router')), '-route');
-        \Microbe\Microbe::$ins->appendChain(new \Microbe\Scene\Webpage\Chain\TemplateEngine($config->get('scene.webpage.templateEngine')), '-template-engine');
-        \Microbe\Microbe::$ins->appendChain(new \Microbe\Cgi\Chain\Dispatcher($config->get('scene.webpage.dispatcher')), '-dispatch');
-        \Microbe\Microbe::$ins->installUserChain();
+        \Microbe\Microbe::$ins->appendChain(new \Microbe\Cgi\Chain\CanonicalUri($config->get('scene.webpage.systemChains.canonicalUri')), '-canonical-uri');
+        \Microbe\Microbe::$ins->appendChain(new \Microbe\Cgi\Chain\Router($config->get('scene.webpage.systemChains.router')), '-route');
+        \Microbe\Microbe::$ins->appendChain(new \Microbe\Scene\Webpage\Chain\TemplateEngine($config->get('scene.webpage.systemChains.templateEngine')), '-template-engine');
+        \Microbe\Microbe::$ins->appendChain(new \Microbe\Cgi\Chain\Dispatcher($config->get('scene.webpage.systemChains.dispatcher')), '-dispatch');
+        \Microbe\Microbe::$ins->installUserChain($config->get('scene.webpage.userChains'));
     }
 
     public function run() {
