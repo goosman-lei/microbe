@@ -49,6 +49,11 @@ class Request extends \Microbe\Scalable {
         return $this->argc;
     }
 
+    public function getEnv($name, $default = null) {
+        $env = getenv($name);
+        return $env ?: $default;
+    }
+
     protected function initOptsAndArgv() {
         $argv = array_slice($this->originalArgv, 1);
         $argc = count($argv);

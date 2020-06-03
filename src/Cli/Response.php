@@ -9,10 +9,18 @@ class Response extends \Microbe\Scalable {
         $this->stderr = fopen('php://stderr', 'w');
     }
 
+    public function print($string) {
+        fwrite($this->stdout, $string);
+    }
+
     public function printf($fmt) {
         $argv = func_get_args();
         array_unshift($argv, $this->stdout);
         call_user_func_array('fprintf', $argv);
+    }
+
+    public function eprint($string) {
+        fwrite($this->stderr, $string);
     }
 
     public function eprintf($fmt) {
