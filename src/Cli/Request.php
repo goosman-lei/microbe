@@ -56,9 +56,9 @@ class Request extends \Microbe\Scalable {
         $idx  = 0;
         while ($idx < $argc) {
             $currArg = $argv[$idx];
-            $nextArg = $idx + 1 < $argc ? $argv[$idx] : null;
+            $nextArg = $idx + 1 < $argc ? $argv[$idx + 1] : null;
             if (preg_match(';^--(?<name>[\w-]++)(?:=(?<value>.*+))?$;', $currArg, $match)
-                || preg_match(';^-(?<name>[a-zA-Z])(?:=(?<value>.*+)?$;', $currArg, $match)) {
+                || preg_match(';^-(?<name>[a-zA-Z])(?:=(?<value>.*+))?$;', $currArg, $match)) {
                 $optName = $match['name'];
                 if (array_key_exists('value', $match)) {
                     $optValue = $match['value'];
