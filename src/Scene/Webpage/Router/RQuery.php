@@ -1,5 +1,5 @@
 <?php
-namespace Microbe\Cgi\Router;
+namespace Microbe\Scene\Webpage\Router;
 class RQuery extends \Microbe\Router {
     public function route($request, $response) {
         $argNameModule = $this->config['arg_name_module'] ?: 'module';
