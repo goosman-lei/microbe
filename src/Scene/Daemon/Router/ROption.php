@@ -1,5 +1,5 @@
 <?php
-namespace Microbe\Cli\Router;
+namespace Microbe\Scene\Daemon\Router;
 class ROption extends \Microbe\Router {
     public function route($request, $response) {
         $optionNameModule = !empty($this->config['option_name_module']) ? $this->config['option_name_module'] : 'module';

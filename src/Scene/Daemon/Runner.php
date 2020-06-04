@@ -16,8 +16,8 @@ class Runner {
         \Microbe\Microbe::init($config);
 
         \Microbe\Microbe::$ins->appendChain(new \Microbe\Chain\Root(), '-root');
-        \Microbe\Microbe::$ins->appendChain(new \Microbe\Cli\Chain\Router($config->get('scene.daemon.systemChains.router')), '-route');
-        \Microbe\Microbe::$ins->appendChain(new \Microbe\Cli\Chain\Dispatcher($config->get('scene.daemon.systemChains.dispatcher')), '-dispatch');
+        \Microbe\Microbe::$ins->appendChain(new \Microbe\Scene\Daemon\Chain\Router($config->get('scene.daemon.systemChains.router')), '-route');
+        \Microbe\Microbe::$ins->appendChain(new \Microbe\Scene\Daemon\Chain\Dispatcher($config->get('scene.daemon.systemChains.dispatcher')), '-dispatch');
         \Microbe\Microbe::$ins->installUserChain($config->get('scene.daemon.userChains'));
     }
 

@@ -1,5 +1,5 @@
 <?php
-namespace Microbe\Cli\Chain;
+namespace Microbe\Scene\Daemon\Chain;
 class Dispatcher extends \Microbe\Chain {
     public function exec($request, $response) {
         $actionClass = '\\' . trim($this->config['namespace'], '\\') . '\\' . $request->routeModule . '\\' . $request->routeAction;
