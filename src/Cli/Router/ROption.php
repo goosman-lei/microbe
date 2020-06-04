@@ -8,6 +8,9 @@ class ROption extends \Microbe\Router {
             return FALSE;
         }
 
+        $module = ucfirst(strtolower($module));
+        $action = ucfirst(strtolower($action));
+
         $request->regExtProperty('routeModule', $module);
         $request->regExtProperty('routeAction', $action);
         $response->regExtProperty('routeModule', $module);
