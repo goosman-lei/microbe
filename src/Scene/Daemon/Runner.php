@@ -22,8 +22,8 @@ class Runner {
     }
 
     public function run() {
-        $request  = new \Microbe\Cgi\Request();
-        $response = new \Microbe\Cgi\Response();
+        $request  = new \Microbe\Cli\Request();
+        $response = new \Microbe\Cli\Response();
 
         \Microbe\Microbe::$ins->doChain($request, $response);
     }

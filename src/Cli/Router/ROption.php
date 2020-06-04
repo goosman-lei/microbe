@@ -2,8 +2,10 @@
 namespace Microbe\Cli\Router;
 class ROption extends \Microbe\Router {
     public function route($request, $response) {
-        $module = $request->getOption($this->config['option_name_module'] ?: 'module');
-        $action = $request->getOption($this->config['option_name_action'] ?: 'action');
+        $optionNameModule = !empty($this->config['option_name_module']) ? $this->config['option_name_module'] : 'module';
+        $optionNameAction = !empty($this->config['option_name_action']) ? $this->config['option_name_action'] : 'action';
+        $module = $request->getOption($optionNameModule);
+        $action = $request->getOption($optionNameAction);
         if (empty($module) || empty($action)) {
             return FALSE;
         }
