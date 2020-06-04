@@ -1,5 +1,5 @@
 <?php
-namespace Microbe\Cgi;
+namespace Microbe;
 abstract class Router {
     protected $config = [];
     public function __construct($config = []) {
