@@ -25,8 +25,7 @@ class Microbe {
         }
     }
 
-    public function installUserChain() {
-        $userChains = $this->config->get('framework.chain');
+    public function installUserChain($userChains) {
         if (empty($userChains)) {
             return;
         }
