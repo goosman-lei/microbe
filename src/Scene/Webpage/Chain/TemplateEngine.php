@@ -9,7 +9,7 @@ class TemplateEngine extends \Microbe\Chain {
         $templateEngine = \Microbe\Scene\Webpage\TemplateEngine\Factory::$factory->getTemplateEngine($module, $action);
 
         if (!isset($templateEngine) || !($templateEngine instanceof \Microbe\Scene\Webpage\TemplateEngine\Abs)) {
-            throw new RuntimeException('get template engine failure');
+            throw new \RuntimeException('get template engine failure');
         }
 
         $response->regExtProperty('templateEngine', $templateEngine);

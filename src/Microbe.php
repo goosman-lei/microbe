@@ -32,7 +32,7 @@ class Microbe {
 
         foreach ($userChains as $chainName => $chainInfo) {
             if ($chainName[0] == '-') {
-                throw new RuntimeException("Invalid user chain name[{$chainName}], it shouldn't begin with '-'");
+                throw new \RuntimeException("Invalid user chain name[{$chainName}], it shouldn't begin with '-'");
             }
 
             $class  = $chainInfo['class'];

@@ -10,7 +10,7 @@ class Router extends \Microbe\Chain {
         if ($router->route($request, $response)) {
             $this->doNext($request, $response);
         } else {
-            throw new RuntimeException('Route error');
+            throw new \RuntimeException('Route error');
         }
     }
 }

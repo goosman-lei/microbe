@@ -5,7 +5,7 @@ class Dispatcher extends \Microbe\Chain {
         $actionNamespace = $this->config['namespace'];
         $actionClass     = '\\' . trim($actionNamespace, '\\') . '\\' . $request->routeModule . '\\' . $request->routeAction;
         if (!class_exists($actionClass)) {
-            throw new RuntimeException('action not exists');
+            throw new \RuntimeException('action not exists');
         }
 
         $action = new $actionClass();
