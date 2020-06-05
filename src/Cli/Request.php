@@ -29,6 +29,10 @@ class Request extends \Microbe\Scalable {
         return array_key_exists($name, $this->opts) ? $this->opts[$name] : $default;
     }
 
+    public function hasOption($name) {
+        return array_key_exists($name, $this->opts);
+    }
+
     public function getArg($n, $default = null) {
         return $n < $this->argc ? $this->args[$n] : $default;
     }
