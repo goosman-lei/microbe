@@ -19,7 +19,7 @@ class Composer {
         \Microbe\Microbe::$ins->switchWorkApp($this->getApp());
 
         $namespace = \Microbe\Microbe::$ins->workApp->config->get('app.namespace');
-        $className = '\\' . rtrim($namespace, '\\') . '\\Service\\' . $this->service;
+        $className = '\\' . trim($namespace, '\\') . '\\Service\\' . $this->service;
 
         try {
             $this->serviceObject = new $className();
