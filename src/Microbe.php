@@ -6,7 +6,8 @@ class Microbe {
 
     protected $chainMapping = [];
 
-    public $config;
+    public $mainApp;
+    public $workApp;
 
     public static $ins;
 
@@ -15,8 +16,13 @@ class Microbe {
             return self::$ins;
         }
         self::$ins = new self();
-        self::$ins->config = $config;
+        self::$ins->mainApp = new \Microbe\App($config);
+        self::$ins->workApp = self::$ins->mainApp;
         return self::$ins;
+    }
+
+    public function switchWorkApp($app) {
+        $this->workApp = $app;
     }
     
     public function doChain($request, $response) {
