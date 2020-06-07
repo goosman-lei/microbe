@@ -15,7 +15,7 @@ class Internal {
 
     protected function initServiceObject() {
         $namespace = \Microbe\Microbe::$ins->workApp->config->get('app.namespace');
-        $className = '\\' . rtrim($namespace, '\\') . '\\Service\\' . $this->service;
+        $className = '\\' . trim($namespace, '\\') . '\\Service\\' . $this->service;
 
         $this->serviceObject = new $className();
     }
