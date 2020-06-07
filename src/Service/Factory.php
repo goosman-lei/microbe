@@ -9,7 +9,7 @@ class Factory {
     public function get($module, $service) {
         if (!array_key_exists($module, $this->config)) {
             return new \Microbe\Service\Proxy\NotFound(
-                \Microbe\Service\Error::MODULE_NOT_FOUND,
+                \Microbe\Service::CODE_MODULE_NOT_FOUND,
                 "Service module [{$module}] not config"
             );
         }
@@ -24,7 +24,7 @@ class Factory {
         }
 
         return new \Microbe\Service\Proxy\NotFound(
-                \Microbe\Service\Error::MODULE_NOT_FOUND,
+                \Microbe\Service::CODE_MODULE_NOT_FOUND,
                 "Service module [proxy = {$moduleConfig['proxy']}] is invalid"
         );
     }
