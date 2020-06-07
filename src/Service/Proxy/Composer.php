@@ -1,6 +1,6 @@
 <?php
 namespace Microbe\Service\Proxy;
-class Internal {
+class Composer {
     protected $config;
     protected $service;
 
