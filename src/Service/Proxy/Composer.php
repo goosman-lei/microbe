@@ -35,7 +35,7 @@ class Composer {
         }
 
         $vendorPath = \Microbe\Microbe::$ins->mainApp->config->get('app.vendor_path');
-        $config     = new \Microbe\Config\File($vendorPath . '/' . $this->config['group'] . '/' . $this->config['protect'] . '/src/conf');
+        $config     = new \Microbe\Config\File($vendorPath . '/' . $this->config['group'] . '/' . $this->config['project'] . '/src/conf');
         $app        = new \Microbe\App($config);
 
         self::$workApps[$key] = $app;
