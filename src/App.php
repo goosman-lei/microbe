@@ -7,6 +7,6 @@ class App {
 
     public function __construct($config) {
         $this->config = $config;
-        $this->serviceFactory = new \Microbe\Service\ProxyFactory($config->get('app.service'));
+        $this->serviceFactory = new \Microbe\Service\Factory($config->get('app.service'));
     }
 }
