@@ -6,7 +6,7 @@ class Microbe {
 
     protected $chainMapping = [];
 
-	public $config;
+    public $config;
     public $workApp;
 
     public static $ins;
@@ -16,7 +16,7 @@ class Microbe {
             return self::$ins;
         }
         self::$ins = new self();
-		self::$ins->config  = $config;
+        self::$ins->config  = $config;
         self::$ins->workApp = new \Microbe\App($config);
         return self::$ins;
     }
