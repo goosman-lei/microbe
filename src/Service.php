@@ -6,7 +6,7 @@ abstract class Service {
     const CODE_SERVICE_NOT_FOUND = 1002;
     const CODE_SERVICE_EXCEPTION = 1003;
 
-    public function isSuccess($res) {
+    public static function isSuccess($res) {
         return $res['code'] === self::CODE_SUCCESS;
     }
 }
