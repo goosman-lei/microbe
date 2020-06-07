@@ -3,7 +3,7 @@ namespace Microbe;
 class App {
     protected $config;
 
-    protected $serviceFactory;
+    public $serviceFactory;
 
     public function __construct($config) {
         $this->config = $config;
