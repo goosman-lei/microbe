@@ -1,8 +1,7 @@
 <?php
 namespace Microbe;
 class App {
-    protected $config;
-
+    public $config;
     public $serviceFactory;
 
     public function __construct($config) {
