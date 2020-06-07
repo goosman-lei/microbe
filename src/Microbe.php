@@ -15,8 +15,7 @@ class Microbe {
             return self::$ins;
         }
         self::$ins = new self();
-        self::$ins->mainApp = new \Microbe\App($config);
-        self::$ins->workApp = self::$ins->mainApp;
+        self::$ins->workApp = new \Microbe\App($config);
         return self::$ins;
     }
 
