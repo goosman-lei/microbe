@@ -7,10 +7,6 @@ class Factory {
     }
 
     public function get($module, $service) {
-        if ($moduleConfig['proxy'] == 'internal') {
-            return new \Microbe\Service\Proxy\Internal($service);
-        }
-
         if (!array_key_exists($module, $this->config)) {
             return new \Microbe\Service\Proxy\NotFound(
                 \Microbe\Service\Error::MODULE_NOT_FOUND,
@@ -18,7 +14,9 @@ class Factory {
             );
         }
         $moduleConfig = $this->config[$module];
-        if ($moduleConfig['proxy'] == 'composer') {
+        if ($moduleConfig['proxy'] == 'internal') {
+            return new \Microbe\Service\Proxy\Internal($moduleConfig['config'], $service);
+        } else if ($moduleConfig['proxy'] == 'composer') {
             return new \Microbe\Service\Proxy\Composer($moduleConfig['config'], $service);
         } else if (class_exists($moduleConfig['proxy'])) {
             $proxyClass = $moduleConfig['proxy'];

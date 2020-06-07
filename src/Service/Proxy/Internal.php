@@ -1,11 +1,13 @@
 <?php
 namespace Microbe\Service\Proxy;
 class Internal {
+    protected $config;
     protected $service;
 
     protected $serviceObject;
 
-    public function __construct($service) {
+    public function __construct($config, $service) {
+        $this->config  = $config;
         $this->service = $service;
 
         $this->initServiceObject();
