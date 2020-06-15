@@ -21,7 +21,7 @@ class Factory {
             $config['resource'] = [];
         }
 
-        $this->schemes = array_merge($this->schemes, $config['schemes']);
+        $this->schemes = array_merge($this->schemes, $config['scheme']);
 
         foreach ($config['resource'] as $scheme => $schemeInfo) {
             $schemeConfig = $this->seperateConfig($schemeInfo);
