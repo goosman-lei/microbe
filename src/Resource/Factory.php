@@ -35,10 +35,12 @@ class Factory {
         }
 
         $connectorAdapterClass = $this->schemes[$scheme];
-        return new $connectorAdapterClass();
+        return new $connectorAdapterClass($nodeConfig);
     }
 
     protected function init($config) {
+        $config['scheme']   = $config['scheme'] ?: [];
+        $config['resource'] = $config['resource'] ?: [];
         /* scheme配置 */
         $this->schemes = array_merge($this->schemes, $config['scheme']);
 
@@ -64,7 +66,7 @@ class Factory {
                         $this->strategies[$url] = strtolower($techUnitInfo['strategy']);
 
                         foreach ($techUnitInfo['nodes'] as $nodeConfig) {
-                            $this->nodes[$nodeKey] = array_merge($schemeInfo['config'], $businessUnitInfo['config'], $techUnitInfo['config'], $nodeConfig);
+                            array_push($this->nodes[$nodeKey], array_merge($schemeInfo['config'], $businessUnitInfo['config'], $techUnitInfo['config'], $nodeConfig));
                         }
                     }
                 }
