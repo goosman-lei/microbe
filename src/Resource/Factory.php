@@ -66,7 +66,7 @@ class Factory {
                         $this->strategies[$url] = strtolower($techUnitInfo['strategy']);
 
                         foreach ($techUnitInfo['nodes'] as $nodeConfig) {
-                            array_push($this->nodes[$nodeKey], array_merge($schemeInfo['config'], $businessUnitInfo['config'], $techUnitInfo['config'], $nodeConfig));
+                            array_push($this->nodes[$url], array_merge($schemeInfo['config'], $businessUnitInfo['config'], $techUnitInfo['config'], $nodeConfig));
                         }
                     }
                 }
