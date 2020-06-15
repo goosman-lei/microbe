@@ -40,7 +40,7 @@ class Factory {
 
     protected function init($config) {
         $config['scheme']   = !empty($config['scheme']) ? $config['scheme'] : [];
-        $config['resource'] = !empty($config['resource']) ? $config['scheme'] : [];
+        $config['resource'] = !empty($config['resource']) ? $config['resource'] : [];
         /* scheme配置 */
         $this->schemes = array_merge($this->schemes, $config['scheme']);
 
