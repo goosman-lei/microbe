@@ -39,8 +39,8 @@ class Factory {
     }
 
     protected function init($config) {
-        $config['scheme']   = $config['scheme'] ?: [];
-        $config['resource'] = $config['resource'] ?: [];
+        $config['scheme']   = !empty($config['scheme']) ? $config['scheme'] : [];
+        $config['resource'] = !empty($config['resource']) ? $config['scheme'] : [];
         /* scheme配置 */
         $this->schemes = array_merge($this->schemes, $config['scheme']);
 
