@@ -78,7 +78,7 @@ class Factory {
         $units    = [];
         $strategy = 'random';
         foreach ($configInfo as $k => $v) {
-            if ($k == ':select-strategy') {
+            if ($k === ':select-strategy') {
                 $strategy = $v;
             } else if (is_numeric($k)) {
                 array_push($nodes, $v);
