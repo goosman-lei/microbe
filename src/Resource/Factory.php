@@ -6,7 +6,7 @@ class Factory {
         'mysqli' => '\\Microbe\\Resource\\Adapter\\Mysqli',
     ];
 
-    protected $nodes  = [];
+    protected $nodes      = [];
     protected $strategies = [];
 
     public function __construct($config) {
