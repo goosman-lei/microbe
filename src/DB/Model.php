@@ -15,6 +15,18 @@ abstract class Model {
 
     const DUPLICATE_ERRNO = 1062;
 
+    public function getTableName() {
+        return $this->tableName;
+    }
+
+    public function getLastId() {
+        return $this->lastId;
+    }
+
+    public function getAffectedNum() {
+        return $this->affectedNum;
+    }
+
     public function query($sql, $onReturn = self::RS_ARRAY) {
         $cluster = $this->isMasterSql($sql) ? 'master' : 'slave';
         $dsn     = 'mysqli://' . $this->dbResource . '/' . $cluster;
@@ -96,7 +108,7 @@ abstract class Model {
     }
 
     public function insert($value, $onDup = FALSE) {
-        $sql = \Microbe\DB\Query::buildInsert($this, $value, $onDupClause);
+        $sql = \Microbe\DB\Query::buildInsert($this, $value, $onDup);
         return $this->execute($sql);
     }
 
@@ -115,13 +127,9 @@ abstract class Model {
         return $this->execute($sql);
     }
 
-    public function delete($where = array(), $orderBy = FALSE, $limit = FALSE) {
-        $sql = \Microbe\DB\Query::buildMultiReplace($this, $where, $this->limitClause($limit), $orderByClause);
+    public function delete($where = array(), $limit = FALSE, $orderBy = FALSE) {
+        $sql = \Microbe\DB\Query::buildDelete($this, $where, $this->limitClause($limit), $orderBy);
         return $this->execute($sql);
-    }
-
-    public function getTableName() {
-        return $this->tableName;
     }
 
     public function escapeName($fieldName) {
