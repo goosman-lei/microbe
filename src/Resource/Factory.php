@@ -84,7 +84,7 @@ class Factory {
     public function get($url) {
         $url = strtolower($url);
         if (empty($this->nodes[$url]) || empty($this->strategies[$url])) {
-            return \RuntimeException("Resource url [{$url}] is not configured");
+            throw \RuntimeException("Resource url [{$url}] is not configured");
         }
 
         $strategy = $this->strategies[$url];
@@ -95,16 +95,16 @@ class Factory {
         } else if (class_exists($strategy) && method_exists($strategy, 'select')) {
             $nodeConfig = call_user_func([$strategy, 'select'], $this->nodes[$url]);
         } else {
-            return \RuntimeException("Strategy of Resource url [{$url}] is invalid");
+            throw \RuntimeException("Strategy of Resource url [{$url}] is invalid");
         }
 
         $scheme = strtolower(substr($url, 0, strpos($url, '://')));
         if (!array_key_exists($scheme, $this->schemes)) {
-            return \RuntimeException("Scheme of Resource url [{$url}] is not found");
+            throw \RuntimeException("Scheme of Resource url [{$url}] is not found");
         }
         $connectorAdapterClass = $this->schemes[$scheme];
         if (!class_exists($connectorAdapterClass)) {
-            return \RuntimeException("ConnectorAdapter class of Resource url [{$url}] is not found");
+            throw \RuntimeException("ConnectorAdapter class of Resource url [{$url}] is not found");
         }
 
         return new $connectorAdapterClass($nodeConfig);
